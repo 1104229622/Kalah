@@ -1,11 +1,25 @@
 import kgp
 
+
 HOST = "wss://kalah.kwarc.info/socket"
 PORT = 2671
 TOKEN = "rengongzhizhang"
 AUTHORS = ["1", "2", "3", "4"]
 NAME = "This is an example"
 ENABLE_DEBUG = True
+
+
+def mtdf(state, depth, side, bestvalue):
+    upperBound = +1000
+    lowerBound = -1000
+    while lowerBound < upperBound:
+        beta = max(bestvalue, lowerBound+1)
+        bestvalue, bestmove = abtree(state, depth, side, beta-1, beta)[0]
+        if bestvalue < beta:
+            upperBound = bestvalue
+        else:
+            lowerBound = bestvalue
+    return bestvalue, bestmove
 
 
 def evaluate(state):
